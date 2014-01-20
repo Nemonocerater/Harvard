@@ -59,7 +59,7 @@
 				</div>
 				
 			</a>
-			<h1 id="clubName"><span id="clubMembers"></span></h1>
+			<h1 id="clubName"><span id="clubMembers"></span></h1><small class="badge">Rating #</small>
 			<h4 id="schoolName"></h4>
 			<p id="clubDetails"></p>
 			<p>Primary Contact: <span id="emailAddress"></span></p>
@@ -69,29 +69,80 @@
 	<div class="container">
 		<p id="addPackageBtn"><a class="btn btn-lg btn-success" data-toggle="modal" href="#submitPackage">+ &nbsp;Add Package</a></p>
 
-       <form class="form-horizontal">
-		    <div class="form-group">
-		    <label for="inputName" class="col-lg-2 control-label">Package Name</label>
-		    <div class="col-lg-10">
-			    <input type="text" class="form-control" id="Text1" placeholder="Eg: 2013 Georgia Tech Game Festival">
-		    </div>
-		    </div>
-		    <div class="form-group">
-		    <label for="inputSchool" class="col-lg-2 control-label">Price</label>
-		    <div class="col-lg-10">
-			    <input type="number" class="form-control" id="Number1" placeholder="Eg: 100">
-		    </div>
-		    </div>
-		    <div class="form-group">
-		    <label for="inputEmail" class="col-lg-2 control-label">Details</label>
-		    <div class="col-lg-10">
-			    <textarea name="textarea" class="form-control" id="Textarea1" placeholder="Details about your event"></textarea>
-		    </div>
-		    </div>
-	    </form>
+		<!--<ul id="packages" class="list-group">
+		</ul>-->
+		<div id="content" class="container jumbotron">
 
-		<ul id="packages" class="list-group">
-		</ul>
+        <div id="packages" class="table">
+          <!--<tr>-->
+            <div class="">
+              <div class="panel panel-success panel-default">
+                <div class="panel-heading panel-success">
+                  <h3 class="panel-title">
+                    <span>HARCODED SAMPLE PACKAGE - Active </span>
+                    <span class="pull-right">
+                      <span class="glyphicon glyphicon-trash"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                    </span>
+                  </h3>
+                  
+                </div>
+                  <div class="panel-body">
+                    <div class=""> 
+
+                      <blockquote class="pull-left text-muted">
+                        <small>Detail of the package goes here </small>
+                      </blockquote>
+
+                      <a class="pull-right"> $1000000</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          <!--</tr>
+
+          <tr>-->
+            <!-- <div class="well"> -->
+
+            <div class="alert alert-warning"> HARDCODED SAMPLE PACKAGE - not active
+               <div class=' pull-right'>
+                    <small class="glyphicon glyphicon-trash"></small>
+                    <small class="glyphicon glyphicon-star"></small>
+                </div>
+                <blockquote class="text-muted">
+                  <small>Detail of the package goes here 
+                    <a class='pull-right'>
+                    $200
+                    </a>
+                  </small>
+                </blockquote>
+            </div>
+          <!--</tr>
+          <tr>-->
+            <div class="">
+              <div class="panel panel-success panel-default">
+                <div class="panel-heading panel-success">
+                  <h3 class="panel-title">
+                    <a class="glyphicon glyphicon-plus" data-toggle="modal" href="#submitPackage"></a>
+                    
+                  </h3>
+                  
+                </div>
+                  <div class="panel-body">
+                    <div class=""> 
+
+                      <a class="pull-right"></a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          <!--</tr>-->
+        </div>
+
+      </div>
+
+
+
 		<hr>
 		<footer>
 			<p>&copy; Unispon 2013</p>

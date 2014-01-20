@@ -23,7 +23,15 @@ foreach ($values as $value) {
 	$searchSQL = "SELECT * FROM Organization WHERE OrganizationName LIKE '%$value%'";
 	$searchResultSQL = mysqli_query($link, $searchSQL);
 
+	$searchSQL2 = "SELECT * FROM package WHERE PackageName LIKE '%$value%'";
+	$searchResultSQL2 = mysqli_query($link, $searchSQL2);
+
 	$result = array(); 
+	while($rowSearch2 = mysqli_fetch_array($searchResultSQL2, MYSQL_ASSOC)) {
+		array_push($result, array('Package Name' => $rowSearch2["PackageName"],
+									 'Detail'=> $rowSearch2["Details"],
+									 'Price' => $rowSearch2["Price"]));
+	}
 	while($rowSearch = mysqli_fetch_array($searchResultSQL, MYSQL_ASSOC)) {
 		$orgId = $rowSearch["OrganizationId"];
 		$sql = "SELECT * FROM package WHERE OrganizationId LIKE '$orgId'";
