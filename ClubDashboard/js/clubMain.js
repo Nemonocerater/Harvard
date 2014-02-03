@@ -57,6 +57,8 @@ $(document).ready(function () {
 	loadClubPackages();
 	loadClubDetails();
 
+	$('#ClubInformation').on('change', '.details', ClubDetails.update);
+
 	function loadClubPackages() {
 		$.getJSON("../php/getPackagesByClub.php", function (data) {
 			var packageName, packagePrice, clubPackagesSize;
