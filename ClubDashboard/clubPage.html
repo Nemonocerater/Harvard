@@ -43,26 +43,26 @@
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
-			<a class="image-club">
-				<div class="image-wrapper">
-					<img id="clubPic" class="img-rounded img-responsive"  style="float: right;" src="http://static2.businessinsider.com/image/51f03f966bb3f73c7700000b/19-fast-food-hacks-that-will-change-the-way-you-order.jpg" />
-			<!-- bad implementation -->
-			
-					<form class="image-uploader" action="../php/uploadImage.php" method="post" enctype="multipart/form-data">
-						<label for="submit" class="btn"><i id="submit-icon" onmouseover="showUploadImage()" onmouseout="hideUploadImage()" class="glyphicon glyphicon-edit"></i> </label>
-						
-						<input id="file"  type="file" name="photo" id="file">
-						<input id="submit" name="submit" type="submit" value="Change" class="" />
-					</form>
-
-
+			<div id="ClubInformation" class="row">
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-10"><h1 id="ClubName"><input type="text" class="details" /></h1></div>
+						<div class="col-md-2"><input id="ClubMembers" type="text" class="details" /></div>
+					</div>
+					<div>
+						<h2 id="SchoolName"><input type="text" class="details" /></h2>
+					</div>
+					<div>
+						<textarea id="ClubDetails" class="details"></textarea>
+					</div>
+					<div>
+						<input id="EmailAddress" type="text" class="details" />
+					</div>
 				</div>
-				
-			</a>
-			<h1 id="clubName"><span id="clubMembers"></span></h1><small class="badge">Rating #</small>
-			<h4 id="schoolName"></h4>
-			<p id="clubDetails"></p>
-			<p>Primary Contact: <span id="emailAddress"></span></p>
+				<div class="col-md-3">
+					<img id="ClubPic" class="img-rounded img-responsive" src="http://static2.businessinsider.com/image/51f03f966bb3f73c7700000b/19-fast-food-hacks-that-will-change-the-way-you-order.jpg" />
+				</div>
+			</div>
 		</div>
 	</div>
 
