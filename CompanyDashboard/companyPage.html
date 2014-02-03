@@ -30,25 +30,18 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			  <ul class="nav navbar-nav pull-right">
+				<li id ="detailsBtn" data-toggle="modal" href="#companyDetails" class="btn btn-primary">Company Details</li>
 				<li type="button" id = "logoutBtn" data-toggle="modal" onclick="logout()" class="btn btn-primary">Log out</li>
 			  </ul>
 		</div>
 	  </div>
 	</div>
 
-	 <div class="jumbotron">
-	  <div class="container">
-	 
-		<h2 class="companyName"><small class="badge">Rating #</small></h2>
-	  </div>
-	</div>
-	
-
 	<div class="container jumbotron">
-			<div id="search">
-				<input type="text" id="searchValue">
-				<button type="button" id = "searchButton" onclick="search()" class="btn btn-primary">Search
-			</div>
+		<div id="search">
+			<input type="text" id="searchValue">
+			<button type="button" id = "searchButton" onclick="search()" class="btn btn-primary">Search</button>
+		</div>
 	</div>
 	
 	<div class="container">
@@ -73,22 +66,55 @@
 			<div class="tab" id="tab3">In future, this tab will display package recommendation to companies</div>
 		</div>
 
-		
-
-
 		<hr>
-
-		
-		
-		
 		
 		<footer>
 			<p>&copy; Unispon 2013</p>
 		</footer>
 		
-		
-		
 	</div>
+	
+	<!-- Company Details Modal -->
+	<div class="modal fade" id="companyDetails">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title"><strong style="color: black">Company Details</h4>
+		  </div>
+		  
+		  <div class="modal-body" style="padding-bottom: 0px;">
+			<form class="form-horizontal">
+			  <div class="form-group">
+				<label for="inputName" class="col-lg-2 control-label">Email</label>
+				<div class="col-lg-10">
+				  <input type="text" class="form-control" id="email" placeholder="Eg: dontreply@company.com">
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label for="inputName" class="col-lg-2 control-label">Name</label>
+				<div class="col-lg-10">
+				  <input type="text" class="form-control" id="companyName" placeholder="Eg: Company">
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label for="inputSchool" class="col-lg-2 control-label">Description</label>
+				<div class="col-lg-10">
+				  <textarea class="form-control" id="description" placeholder="Eg: We do cool things!"></textarea>
+				</div>
+			  </div>
+			</form>
+		  </div>
+		  
+		  <div class="modal-footer">
+			Your information is autosaved!
+		  </div>
+		
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+			  
+	</div><!-- /.modal -->
 	
 	<!-- Bootstrap core JavaScript
 	================================================== -->
