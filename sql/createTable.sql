@@ -27,6 +27,7 @@ Primary Key (OrganizationId),
 Foreign Key (UserId) REFERENCES USER(UserId)
 );
 
+
 CREATE TABLE if not exists Company
 (
 CompanyId int NOT NULL AUTO_INCREMENT UNIQUE,
@@ -48,6 +49,16 @@ Price double NOT NULL,
 Primary Key (PackageId),
 Foreign Key (CompanyId) REFERENCES Company(CompanyId),
 Foreign Key (OrganizationId) REFERENCES Organization(OrganizationId)
+);
+
+
+CREATE TABLE if not exists Wishlist
+(
+PackageId int NOT NULL,
+CompanyId int NOT NULL,
+Primary Key (PackageId,CompanyId),
+Foreign Key (CompanyId) REFERENCES Company(CompanyId),
+Foreign Key (PackageId) REFERENCES Package(PackageId)
 );
 
 /* create context*/

@@ -1,10 +1,10 @@
 INSERT INTO user (Username, Password, Email)
-VALUES ('company1', 'testtest', 'companyemail1@email.com'),
+VALUES ('company', 'company', 'companyemail1@email.com'),
 ('company2', 'testtest', 'companyemail2@email.com'),
 ('company3', 'testtest', 'companyemail3@email.com'),
 ('company4', 'testtest', 'companyemail4@email.com'),
 ('company5', 'testtest', 'companyemail5@email.com'),
-('organization1', 'testtest', 'organizationemail1@email.com'),
+('club', 'club', 'organizationemail1@email.com'),
 ('organization2', 'testtest', 'organizationemail2@email.com'),
 ('organization3', 'testtest', 'organizationemail3@email.com'),
 ('organization4', 'testtest', 'organizationemail4@email.com'),
@@ -29,14 +29,14 @@ VALUES (@last+5, '1', 'Test Organization1', 'Georgia Tech', 'This is our organiz
 SELECT @last := LAST_INSERT_ID();
 
 INSERT INTO `package` (PackageName, OrganizationId, Details, Price)
-VALUES ('org1: Package1', @last, 'This is our package1.', '$100'),
-('org1: Package2', @last, 'This is our package2.', '$200'),
-('org1: Package3', @last, 'This is our package3.', '$300'),
-('org2: Package1', @last+1, 'This is our package1.', '$100'),
-('org3: Package1', @last+2, 'This is our package1.', '$100'),
-('org4: Package1', @last+3, 'This is our package1.', '$100'),
-('org5: Package1', @last+4, 'This is our package1.', '$100'),
-('org5: Package2', @last+4, 'This is our package2.', '$200');
+VALUES ('org1: Packagename', @last, 'This is our package1 details.', '$100'),
+('org1: venom', @last, 'This is our package2 details.', '$200'),
+('org1: test', @last, 'This is our package3 details.', '$300'),
+('org2: popcorn', @last+1, 'This is our package1 details.', '$100'),
+('org3: games', @last+2, 'This is our package1 details.', '$100'),
+('org4: videos', @last+3, 'This is our package1 details.', '$100'),
+('org5: mouse', @last+4, 'This is our package1 details.', '$100'),
+('org5: cat', @last+4, 'This is our package2 details.', '$200');
 
 
 

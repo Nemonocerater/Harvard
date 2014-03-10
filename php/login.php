@@ -47,6 +47,11 @@ $hasher = new PasswordHash($hash_cost_log2, $hash_portable);
 		//$detailRow = mysqli_fetch_array($detailResult, MYSQL_ASSOC);
 		//$organizationName = $detailRow["OrganizationName"];
 		if(mysqli_num_rows($result_organization) == 0){
+			$searchSQLCompanyId = "SELECT * FROM Company WHERE UserId = '$userId'";
+			$searchResultSQLCompanyId = mysqli_query($link, $searchSQLCompanyId);
+			$rowSearchCompanyId = mysqli_fetch_array($searchResultSQLCompanyId, MYSQL_ASSOC);
+			$_SESSION['uniqueCompanyId'] = $rowSearchCompanyId["CompanyId"];
+
 			echo('company');
 		}
 		else{

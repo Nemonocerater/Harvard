@@ -4,15 +4,67 @@ function logout(){
 	   window.location.href = '../php/logout.php'
 	}
 }
+function trashIcon(ele){
+	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
+	var name = ele.getElementsByTagName('span')[0].innerHTML;
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+	alert("trash");
+	alert(cost);
+}
+function wishlist(ele){
+	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
+	var name = ele.getElementsByTagName('span')[0].innerHTML;
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+	alert("wish");
+	alert(name);
+}
+function sponsor(ele){
+	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
+	var name = ele.getElementsByTagName('span')[0].innerHTML;
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+	console.log("sponsor");
+	
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+		$.post("../php/charles/sponsorPackage.php", {costValue: cost, packageName:name, packageDetails:details},
+		function(data)
+		{
+			//console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			//load_Sponsorshiplist();
+		}, 'json');
+
+		setTimeout(function(){load_Sponsorshiplist()},3000);
+	
+}
+function load_Wishlist(){
+	$.post("../php/charles/loadWishlist.php", {postsearch: searchValue},
+	function(data)
+	{	
+		$("#wishlist").empty();
+		$.each(data.result, function(){
+		    $("#wishlist").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
+		});
+	}, 'json');
+}
+function load_Sponsorshiplist(){
+	console.log("starting loading sponsorshiplist");
+	$.post("../php/charles/loadSponsorshiplist.php",
+	function(data)
+	{	
+		console.log("emptying sponsorship list");
+		$("#sponsoredlist").empty();
+		$.each(data.result, function(){
+		    $("#sponsoredlist").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
+		});
+	});
+}
 
 function search(){
 	var searchValue = $('#searchValue').val();
 	if(searchValue == "") {
-		$.getJSON("../php/getAllPackages.php", function(data)
-		{	
+		$.getJSON("../php/getAllPackages.php", function (data) {
 			$("#packages").empty();
 			$.each(data.result, function(){
-				$("#packages").append("<li class=\"list-group-item\">"+this['Package Name']+": "+this['Detail']+"<span>"+this['Price']+"</span></li>");
+			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 			});
 		});
 	}
@@ -22,7 +74,7 @@ function search(){
 		{	
 			$("#packages").empty();
 			$.each(data.result, function(){
-				$("#packages").append("<li class=\"list-group-item\">"+this['Package Name']+": "+this['Detail']+"<span>"+this['Price']+"</span></li>");
+			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 			});
 		}, 'json');
 	}
@@ -72,13 +124,11 @@ $(document).ready(function () {
 				$("#description").val(details["companyDescription"]);
 			});
 	}
-
-	function load_allPackages(){
-		$.getJSON("../php/getAllPackages.php", function(data)
-		{	
+	function load_allPackages() {
+		$.getJSON("../php/getAllPackages.php", function (data) {
 			$("#packages").empty();
 			$.each(data.result, function(){
-				$("#packages").append("<li class=\"list-group-item\">"+this['Package Name']+": "+this['Detail']+"<span>"+this['Price']+"</span></li>");
+			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 			});
 		});
 	}
