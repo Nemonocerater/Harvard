@@ -37,7 +37,7 @@ $packageId = mysqli_fetch_array($packageQuery, MYSQL_ASSOC)["PackageId"];
 
 echo $packageId;
 
-$addToWishlist = mysqli_query($link, "INSERT INTO Wishlist (CompanyId, PackageId) VALUES ('$uniqueCompanyId', '$packageId')");
+$addToWishlist = mysqli_query($link, "DELETE FROM Wishlist WHERE CompanyId='$uniqueCompanyId' AND PackageId='$packageId'");
 
 mysqli_close($link);
 ?>

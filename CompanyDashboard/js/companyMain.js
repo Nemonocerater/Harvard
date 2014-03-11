@@ -8,15 +8,40 @@ function trashIcon(ele){
 	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
 	var name = ele.getElementsByTagName('span')[0].innerHTML;
 	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
-	alert("trash");
-	alert(cost);
+	console.log("trash");
+
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+		$.post("../php/charles/deletePackageFromWishlist.php", {costValue: cost, packageName:name, packageDetails:details},
+		function(data)
+		{
+			//console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			//load_Wishlist()();
+		}, 'json');
+		console.log("3 seconds until wishlist refresh...");
+		setTimeout(function(){
+			load_Wishlist();
+		},3000);
+
 }
 function wishlist(ele){
 	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
 	var name = ele.getElementsByTagName('span')[0].innerHTML;
 	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
-	alert("wish");
-	alert(name);
+	console.log("wish");
+
+	var details = ele.parentNode.parentNode.parentNode.getElementsByTagName('small')[0].innerHTML;
+		$.post("../php/charles/addPackageToWishlist.php", {costValue: cost, packageName:name, packageDetails:details},
+		function(data)
+		{
+			//console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			//load_Wishlist();
+		}, 'json');
+		console.log("3 seconds until sponsorshiplist refresh...");
+		setTimeout(function(){
+			load_Wishlist();
+		},3000);
+
+
 }
 function sponsor(ele){
 	var cost = ele.parentNode.parentNode.parentNode.getElementsByTagName('a')[0].innerHTML;
@@ -38,9 +63,13 @@ function sponsor(ele){
 	
 }
 function load_Wishlist(){
-	$.post("../php/charles/loadWishlist.php", {postsearch: searchValue},
+	console.log("starting loading wishlist");
+	$.post("../php/charles/loadWishlist.php", {postsearch: 'test'},
 	function(data)
 	{	
+		console.log("wishlist list load data:")
+		console.log(data);
+		console.log(data.result);
 		$("#wishlist").empty();
 		$.each(data.result, function(){
 		    $("#wishlist").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
@@ -49,12 +78,12 @@ function load_Wishlist(){
 }
 function load_Sponsorshiplist(){
 	console.log("starting loading sponsorshiplist");
-	$.post("../php/charles/loadSponsorshiplist.php",
-	function(data)
-	{	
-		console.log("emptying sponsorship list");
+	$.getJSON("../php/charles/loadSponsorshiplist.php", function (data){	
+		console.log("Sponsorship list load data:")
+		console.log(data);
+		console.log(data.resultlist);
 		$("#sponsoredlist").empty();
-		$.each(data.result, function(){
+		$.each(data.resultlist, function(){
 		    $("#sponsoredlist").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"trashIcon(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 		});
 	});
@@ -113,6 +142,7 @@ $(document).ready(function () {
 		load_allPackages();
 		initTabView();
 		load_Sponsorshiplist();
+		load_Wishlist();
 	}
 
 	function load_CompanyInfo(){

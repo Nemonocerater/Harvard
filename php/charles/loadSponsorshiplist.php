@@ -20,17 +20,17 @@ if(mysqli_connect_errno()){
 
 $uniqueCompanyId = $_SESSION['uniqueCompanyId'];
 
-	$searchSQL2 = "SELECT * FROM Package WHERE CompanyId = $uniqueCompanyId";
-	$searchResultSQL2 = mysqli_query($link, $searchSQL2);
+	$loadSponsorshipListSQL = "SELECT * FROM Package WHERE CompanyId = $uniqueCompanyId";
+	$loadSponsorshipListResultSQL = mysqli_query($link, $loadSponsorshipListSQL);
 
-	$result = array(); 
-	while($rowSearch2 = mysqli_fetch_array($searchResultSQL2, MYSQL_ASSOC)) {
-		array_push($result, array('Package Name' => $rowSearch2["PackageName"],
-									 'Detail'=> $rowSearch2["Details"],
-									 'Price' => $rowSearch2["Price"]));
+	$resultSponsorshipList = array(); 
+	while($rowSearch3 = mysqli_fetch_array($loadSponsorshipListResultSQL, MYSQL_ASSOC)) {
+		array_push($resultSponsorshipList, array('Package Name' => $rowSearch3["PackageName"],
+									 'Detail'=> $rowSearch3["Details"],
+									 'Price' => $rowSearch3["Price"]));
 	}
 
-echo json_encode(array("result" => $result));
+echo json_encode(array("resultlist" => $resultSponsorshipList));
 
 
 
