@@ -31,8 +31,10 @@ function sponsor(ele){
 			//console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			//load_Sponsorshiplist();
 		}, 'json');
-
-		setTimeout(function(){load_Sponsorshiplist()},3000);
+		console.log("3 seconds until sponsorshiplist refresh...");
+		setTimeout(function(){
+			load_Sponsorshiplist();
+		},3000);
 	
 }
 function load_Wishlist(){

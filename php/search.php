@@ -23,10 +23,22 @@ foreach ($values as $value) {
 	$searchSQL = "SELECT * FROM Organization WHERE OrganizationName LIKE '%$value%'";
 	$searchResultSQL = mysqli_query($link, $searchSQL);
 
-	$searchSQL2 = "SELECT * FROM package WHERE PackageName LIKE '%$value%'";
+	$searchSQL2 = "SELECT DISTINCT * FROM package WHERE PackageName LIKE '%$value%' OR Category LIKE '%$value%'";
 	$searchResultSQL2 = mysqli_query($link, $searchSQL2);
 
+	//combined with previous query to make more efficient and intuitive
+	//$categorySearchSQL = "SELECT * FROM package WHERE Category LIKE '%$value%'";
+	//$categorySearchResultSQL = mysqli_query($link, $categorySearchSQL);
+
 	$result = array(); 
+
+	//Combining code into on distinct sql query is much better than what this was before - Charles
+	/*while($categorySearch = mysqli_fetch_array($categorySearchResultSQL, MYSQL_ASSOC)) {
+		array_push($result, array('Package Name' => $categorySearch["PackageName"],
+									 'Detail'=> $categorySearch["Details"],
+									 'Price' => $categorySearch["Price"]));
+	}*/
+
 	while($rowSearch2 = mysqli_fetch_array($searchResultSQL2, MYSQL_ASSOC)) {
 		array_push($result, array('Package Name' => $rowSearch2["PackageName"],
 									 'Detail'=> $rowSearch2["Details"],
