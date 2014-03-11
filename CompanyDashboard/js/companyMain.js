@@ -112,6 +112,7 @@ $(document).ready(function () {
 		load_CompanyInfo();
 		load_allPackages();
 		initTabView();
+		load_Sponsorshiplist();
 	}
 
 	function load_CompanyInfo(){
