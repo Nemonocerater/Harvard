@@ -131,11 +131,63 @@ var CompanyDetails = {
 	}
 }
 
+function Slider ($object) {
+	var slider = this;
+	slider.object = $object;
+	slider.hiddenPos = (-$object.outerWidth(false)) + "px";
+	slider.object.css('left', slider.hiddenPos);
+	
+	slider.open = function () {
+		slider.object.animate({
+			left: 0
+		}, 1000);
+	};
+	slider.close = function () {
+		slider.object.animate({
+			left: slider.hiddenPos
+		}, 1000);
+	};
+}
+
+var hindex = 0;
+var hints = [
+	"Search for a package that best suits your style - Categories, Ethnicity, Sports, Races, etc.",
+	"Click on the company details button to edit your company profile.",
+	"Click on the star to save the package for later review.",
+	"Click on the trashcan to remove the package from your saved package list."
+];
+function hint_left()
+{
+	--hindex;
+	if (hindex < 0) hindex = hints.length - 1;
+	updateHint();
+}
+function hint_right()
+{
+	hindex = (hindex + 1) % hints.length;
+	updateHint();
+}
+function updateHint()
+{
+	var hint = hints[hindex];
+	$('#hint').html(hint);
+	$('#hintCount').html((hindex + 1) + "/" + hints.length);
+}
+updateHint();
+
 $(document).ready(function () {	
 	load();
 	
 	$('#companyDetails')
-		.on('change', CompanyDetails.update);	
+		.on('change', CompanyDetails.update);
+
+	var slider = new Slider($('.SideSlider'));
+	$('body').on('click', '.SideSlider', function (event) {
+		event.stopPropagation();
+		slider.open();
+	}).on('click', function () {
+		slider.close();
+	});
 		
 	function load(){
 		load_CompanyInfo();
