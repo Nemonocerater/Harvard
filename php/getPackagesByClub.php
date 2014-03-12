@@ -25,7 +25,8 @@ $result = array();
 
 while($row = mysqli_fetch_array($resultSQL, MYSQL_ASSOC))
 	array_push($result, array('packageName' => $row["PackageName"],
-							  'packagePrice' => $row["Price"]
+							  'packagePrice' => $row["Price"],
+							  'packageDetails' => $row["Details"]
 	));
 echo json_encode(array("packages" => $result));
 

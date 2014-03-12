@@ -30,7 +30,7 @@ while($row = mysqli_fetch_array($resultSQL, MYSQL_ASSOC)){
 							  'emailAddress'=> $userEmail,
 							  'numberOfMembers' => $row["OrganizationSize"],
 							  'schoolName' => $row["School"],
-							  'clubDescription' => "Add More Details about Your Organization",
+							  'clubDescription' => $row["OrganizationDescription"],
 							  'imageLocation' => "http://static2.businessinsider.com/image/51f03f966bb3f73c7700000b/19-fast-food-hacks-that-will-change-the-way-you-order.jpg"));                      
 }
 echo json_encode(array("clubDetails" => $result));

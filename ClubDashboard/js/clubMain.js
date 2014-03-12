@@ -15,7 +15,8 @@ function submit() {
 	var packageName = $('#packageName').val();
 	var price = $('#price').val();
 	var details = $('#details').val();
-	$.post('../php/addPackage.php', { postPackageName: packageName, postPrice: price, postDetails: details },
+	$.post('../php/addPackage.php',
+		{ postPackageName: packageName, postPrice: price, postDetails: details },
 		function (data) {
 		    window.location.reload();
 		});
@@ -53,6 +54,30 @@ var ClubDetails = {
 	}
 }
 
+var ClubPackages = {
+	getPackageString: function (name, price, details) {
+		return "<div> \
+			<div class=\"panel panel-success panel-default\"> \
+				<div class=\"panel-heading panel-success\"> \
+					<h3 class=\"panel-title\"> \
+						<span> " + name + "- Active </span> \
+						<span class=\"pull-right\"> \
+							<span class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span> \
+							<span class=\"glyphicon glyphicon-star\"></span> \
+						</span> \
+					</h3> \
+				</div> \
+				<div class=\"panel-body\"> \
+					<div class=\"\"> \
+						<blockquote class=\"pull-left text-muted\"><small>" + details + " </small></blockquote> \
+						<a class=\"pull-right\"> $" + price + "</a> \
+					</div> \
+				</div> \
+			</div> \
+		</div>";
+	}
+}
+
 $(document).ready(function () {
 	loadClubPackages();
 	loadClubDetails();
@@ -66,7 +91,8 @@ $(document).ready(function () {
 			for (var i = 0; i < clubPackagesSize; i++) {
 				packageName = data.packages[i].packageName;
 				packagePrice = data.packages[i].packagePrice;
-			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+packageName+ "- Active </span><span class=\"pull-right\"><span class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span><span class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>Detail of the package goes here </small></blockquote><a class=\"pull-right\"> $"+packagePrice+"</a></div></div></div></div>");
+				packageDetails = data.packages[i].packageDetails;
+			    $("#packages").prepend(ClubPackages.getPackageString(packageName, packagePrice, packageDetails));
 			}
 		});
 	}
