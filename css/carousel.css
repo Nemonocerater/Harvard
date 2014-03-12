@@ -1,4 +1,15 @@
 
+#forgotPassword
+{
+	cursor: pointer;
+}
+
+#result
+{
+	color: red;
+	padding: 5px;
+}
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */

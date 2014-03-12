@@ -45,6 +45,13 @@ function register() {
 }
 
 jQuery(document).ready(function () {
+
+	$('#inputEmail').add('#inputPassword').on('keypress', function submitKeypress(event) {
+		if (event.which == 13)
+		{
+			login();
+		}
+	});
 	
 	/** Scrollspy Implemented for Scroll instead of previous nasty code**/
 	

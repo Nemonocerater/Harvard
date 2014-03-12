@@ -78,11 +78,63 @@ var ClubPackages = {
 	}
 }
 
+function Slider ($object) {
+	var slider = this;
+	slider.object = $object;
+	slider.hiddenPos = (-$object.outerWidth(false)) + "px";
+	slider.object.css('left', slider.hiddenPos);
+	
+	slider.open = function () {
+		slider.object.animate({
+			left: 0
+		}, 1000);
+	};
+	slider.close = function () {
+		slider.object.animate({
+			left: slider.hiddenPos
+		}, 1000);
+	};
+}
+
+var hindex = 0;
+var hints = [
+	"Click on the big green button to add a package.",
+	"Click on any piece of club information in order to change that piece of information.",
+	"Click on package information in order to change it.",
+	"Click on the trashcan icon in order to delete a package.  Packages that have already been sponsored cannot be deleted."
+];
+function hint_left()
+{
+	--hindex;
+	if (hindex < 0) hindex = hints.length - 1;
+	updateHint();
+}
+function hint_right()
+{
+	hindex = (hindex + 1) % hints.length;
+	updateHint();
+}
+function updateHint()
+{
+	var hint = hints[hindex];
+	$('#hint').html(hint);
+	$('#hintCount').html((hindex + 1) + "/" + hints.length);
+}
+updateHint();
+
 $(document).ready(function () {
 	loadClubPackages();
 	loadClubDetails();
 
 	$('#ClubInformation').on('change', '.details', ClubDetails.update);
+	
+	var slider = new Slider($('.SideSlider'));
+	$('body').on('click', '.SideSlider', function (event) {
+		event.stopPropagation();
+		slider.open();
+	}).on('click', function () {
+		slider.close();
+	});
 
 	function loadClubPackages() {
 		$.getJSON("../php/getPackagesByClub.php", function (data) {
