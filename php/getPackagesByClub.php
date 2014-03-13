@@ -24,7 +24,8 @@ $resultSQL = mysqli_query($link, $sql);
 $result = array();
 
 while($row = mysqli_fetch_array($resultSQL, MYSQL_ASSOC))
-	array_push($result, array('packageName' => $row["PackageName"],
+	array_push($result, array('packageId' => $row["PackageId"],
+							  'packageName' => $row["PackageName"],
 							  'packagePrice' => $row["Price"],
 							  'packageDetails' => $row["Details"]
 	));

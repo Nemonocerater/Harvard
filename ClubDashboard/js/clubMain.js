@@ -10,6 +10,47 @@ function hideUploadImage(){
 	}, 2000);	
 }
 
+var packageToEdit = {
+	obj: null,
+	id: -1,
+	name: "",
+	details: "",
+	price: ""
+};
+var canEdit = false;
+function packageEditorClick()
+{
+	if (canEdit)
+	{
+		edit();
+	}
+	else
+	{
+		submit();
+	}
+}
+
+function edit()
+{
+	var packageName = $('#packageName').val();
+	var price = Number($('#price').val());
+	var details = $('#details').val();
+	
+	packageToEdit.obj.find('.packageName').html(packageName);
+	packageToEdit.obj.find('.packageDetails').html(details);
+	packageToEdit.obj.find('.packagePrice').html('$' + price);
+	
+	var post = {
+		postId: packageToEdit.id,
+		postPackageName: packageName,
+		postPrice: price,
+		postDetails: details
+	};
+	
+	$.post('../php/editPackage.php', post);
+	$('#submitPackage').modal('hide');
+}
+
 //add a package to database when click the submit button
 function submit() {
 	var packageName = $('#packageName').val();
@@ -20,6 +61,14 @@ function submit() {
 		function (data) {
 		    window.location.reload();
 		});
+}
+
+function addClick()
+{
+	canEdit = false;
+	$('#packageName').val("");
+	$('#price').val("");
+	$('#details').val("");
 }
 
 //logout from the club page
@@ -38,8 +87,8 @@ var ClubDetails = {
 	},
 	get: function() {
 		var clubName = $('#ClubName').children('input').val();
-		var clubMembers = parseInt($('#ClubMembers').val());
-		var schoolName = $('#SchoolName').children('input').val();
+		var clubMembers = parseInt($('#ClubMembers > input').val());
+		var schoolName = $('#SchoolName > input').val();
 		var clubDetails = $('#ClubDetails').val();
 		var emailAddress = $('#EmailAddress').val();
 		
@@ -55,22 +104,22 @@ var ClubDetails = {
 }
 
 var ClubPackages = {
-	getPackageString: function (name, price, details) {
-		return "<div> \
+	getPackageString: function (id, name, price, details) {
+		return "<div class=\"activePackage\" data-id=\"" + id + "\"> \
 			<div class=\"panel panel-success panel-default\"> \
 				<div class=\"panel-heading panel-success\"> \
 					<h3 class=\"panel-title\"> \
-						<span> " + name + "- Active </span> \
+						<span class=\"packageName\"> " + name + "</span> \
 						<span class=\"pull-right\"> \
-							<span class=\"glyphicon glyphicon-trash\">"+"&nbsp"+"</span> \
-							<span class=\"glyphicon glyphicon-star\"></span> \
+							<span class=\"glyphicon glyphicon-edit\"></span> "+"&nbsp"+"\
+							<span class=\"glyphicon glyphicon-trash\"></span> \
 						</span> \
 					</h3> \
 				</div> \
 				<div class=\"panel-body\"> \
 					<div class=\"\"> \
-						<blockquote class=\"pull-left text-muted\"><small>" + details + " </small></blockquote> \
-						<a class=\"pull-right\"> $" + price + "</a> \
+						<blockquote class=\"pull-left text-muted\"><small class=\"packageDetails\">" + details + " </small></blockquote> \
+						<a class=\"pull-right packagePrice\"> $" + price + "</a> \
 					</div> \
 				</div> \
 			</div> \
@@ -122,6 +171,8 @@ function updateHint()
 }
 updateHint();
 
+
+
 $(document).ready(function () {
 	loadClubPackages();
 	loadClubDetails();
@@ -129,22 +180,71 @@ $(document).ready(function () {
 	$('#ClubInformation').on('change', '.details', ClubDetails.update);
 	
 	var slider = new Slider($('.SideSlider'));
-	$('body').on('click', '.SideSlider', function (event) {
+	$('body').on('click', '.SideSlider', function hintSliderOpen(event) {
 		event.stopPropagation();
 		slider.open();
-	}).on('click', function () {
+	}).on('click', function hintSliderClose() {
 		slider.close();
 	});
+	
+	$('#packages').on('click', 'span.glyphicon-edit', function openEditMenu() {
+		var $package = $(this);
+		while (!$package.hasClass('activePackage'))
+		{
+			$package = $package.parent();
+		}
+		setPackageDetails($package);
+		canEdit = true;
+		$('#submitPackage').modal('show');
+		
+		$('#packageName').val(packageToEdit.name);
+		$('#price').val(packageToEdit.price);
+		$('#details').val(packageToEdit.details);
+	});
+	
+	$('#packages').on('click', 'span.glyphicon-trash', function deletePackage() {
+		if (confirm("Are you sure you want to delete this package?"))
+		{
+			var $package = $(this);
+			while (!$package.hasClass('activePackage'))
+			{
+				$package = $package.parent();
+			}
+			setPackageDetails($package);
+			
+			var post = { id: packageToEdit.id };
+			$.post('../php/deletePackage.php', post, function postDeletePackage(data) {
+				$package.remove();
+			});
+		}
+	});
+	
+	function setPackageDetails($package)
+	{
+		var id = $package.data('id');
+		var name = $package.find('.packageName').html();
+		var details = $package.find('.packageDetails').html();
+		var price = $package.find('.packagePrice').html();
+		price = price.replace(/\$/gi,""); 
+		price = price.replace(/,/gi,"");
+
+		packageToEdit.obj = $package;
+		packageToEdit.id = id;
+		packageToEdit.name = name;
+		packageToEdit.details = details;
+		packageToEdit.price = Number(price);
+	}
 
 	function loadClubPackages() {
 		$.getJSON("../php/getPackagesByClub.php", function (data) {
-			var packageName, packagePrice, clubPackagesSize;
+			var packageId, packageName, packagePrice, clubPackagesSize;
 			clubPackagesSize = data.packages.length;
 			for (var i = 0; i < clubPackagesSize; i++) {
+				packageId = data.packages[i].packageId;
 				packageName = data.packages[i].packageName;
 				packagePrice = data.packages[i].packagePrice;
 				packageDetails = data.packages[i].packageDetails;
-			    $("#packages").prepend(ClubPackages.getPackageString(packageName, packagePrice, packageDetails));
+			    $("#packages").prepend(ClubPackages.getPackageString(packageId, packageName, packagePrice, packageDetails));
 			}
 		});
 	}
@@ -160,14 +260,7 @@ $(document).ready(function () {
 			var imageLocation = data.clubDetails[0].imageLocation;
 
 			$("#ClubName").children('input').val(clubName);
-			if (numberOfMembers === null)
-			{
-				$("#ClubMembers").val("#ofMembers");
-			}
-			else
-			{
-				$("#ClubMembers").val(numberOfMembers);
-			}
+			$("#ClubMembers > input").val(numberOfMembers);
 			
 			$("#SchoolName").children('input').val(schoolName);
 			$("#ClubDetails").val(clubDescription);

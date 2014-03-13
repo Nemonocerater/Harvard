@@ -70,7 +70,7 @@
 	</div>
 
 	<div class="container">
-		<p id="addPackageBtn"><a class="btn btn-lg btn-success" data-toggle="modal" href="#submitPackage">+ &nbsp;Add Package</a></p>
+		<p id="addPackageBtn"><a class="btn btn-lg btn-success" data-toggle="modal" onclick="addClick()" href="#submitPackage">+ &nbsp;Add Package</a></p>
 
 		<!--<ul id="packages" class="list-group">
 		</ul>-->
@@ -137,7 +137,7 @@
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" onclick="submit()" class="btn btn-primary">Submit</button>
+			<button type="button" onclick="packageEditorClick()" class="btn btn-primary">Submit</button>
 		  </div>
 		</div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
@@ -160,8 +160,8 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
-	<script src="js/bootstrap.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
 	<script src="js/clubMain.js"></script>
 </body>
 </html>

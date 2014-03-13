@@ -90,6 +90,16 @@ textarea.details:focus {
     float:right;
 }
 
+div.activePackage span.glyphicon:hover
+{
+	color: rgb(86, 165, 86);
+	cursor: pointer;
+}
+div.activePackage span.glyphicon:active
+{
+	color: rgb(105, 198, 105);
+}
+
 .image-uploader{
 
   position: relative;
