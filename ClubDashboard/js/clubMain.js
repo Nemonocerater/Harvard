@@ -149,8 +149,14 @@ var hindex = 0;
 var hints = [
 	"Click on the big green button to add a package.",
 	"Click on any piece of club information in order to change that piece of information.",
-	"Click on package information in order to change it.",
+	"Click on the package edit button in order to change it.",
 	"Click on the trashcan icon in order to delete a package.  Packages that have already been sponsored cannot be deleted."
+];
+var hintPointers = [
+	"",
+	"",
+	"",
+	""
 ];
 function hint_left()
 {
