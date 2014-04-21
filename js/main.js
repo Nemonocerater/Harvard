@@ -53,6 +53,15 @@ jQuery(document).ready(function () {
 		}
 	});
 	
+	$('#forgotPassword').on('click', function forgotPassword(event) {
+		var name = $('#inputEmail').val();
+
+		$.post('php/changePassword.php', { name: name },
+		function (data) {
+			$('#result').html(data);
+		});
+	});
+	
 	/** Scrollspy Implemented for Scroll instead of previous nasty code**/
 	
 	/**Parralax Functionality**/
