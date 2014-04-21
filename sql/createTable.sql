@@ -1,5 +1,5 @@
 /* create a unispon database before you do anything*/
-/*CREATE DATABASE if not exists cding9_unispon;    Uncomment this line for xampp/wampp*/
+CREATE DATABASE if not exists unispon;
 
 
 /*create four tables*/
