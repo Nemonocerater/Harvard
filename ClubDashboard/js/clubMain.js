@@ -10,6 +10,11 @@ function hideUploadImage(){
 	}, 2000);	
 }
 
+function changePic(){
+	var url = $("#imgUrl").val();
+	$("#ClubPic").attr("src",url);
+}
+
 var packageToEdit = {
 	obj: null,
 	id: -1,
