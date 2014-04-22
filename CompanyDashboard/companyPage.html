@@ -30,7 +30,7 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			  <ul class="nav navbar-nav pull-right">
-				<li id ="detailsBtn" data-toggle="modal" href="#companyDetails" class="btn btn-primary">Company Details</li>
+				<li id ="detailsBtn" data-toggle="modal" href="#companyDetails" class="btn btn-primary"><div id="arrowCompanyDetails" class="hintArrow" style="left: -80px; bottom: -150px; -webkit-transform:rotateZ(180deg);"></div>Company Details</li>
 				<li type="button" id = "logoutBtn" data-toggle="modal" onclick="logout()" class="btn btn-primary">Log out</li>
 			  </ul>
 		</div>
@@ -38,7 +38,7 @@
 	</div>
 
 	<div class="container jumbotron">
-		<div id="search">
+		<div id="search" style="position:relative">
 			<div class="span12 text-center">
 				<div id="image" style="background-color: white;overflow: hidden; margin-top:-20px; text-align: center;">
 					<img class="text-center" src="./images/logobig.png" style="width:230px;">
@@ -47,6 +47,7 @@
 				<br>
 				<button type="button" id = "searchButton" onclick="search()" class="btn btn-primary" style="width:100px; height:30px;">Search</button>
 			</div>
+			<div id="arrowSearch" class="hintArrow" style="left: -30px; bottom: -100px; -webkit-transform:rotateZ(180deg);"></div>
 		</div>
 	</div>
 	
@@ -93,7 +94,7 @@
               <div class="panel panel-success panel-default">
                 <div class="panel-heading panel-success">
                   <h3 class="panel-title">
-                    <span>HARCODED SAMPLE PACKAGE - Active </span>
+                    <span>HARCODED SAMPLE PACKAGE - Active</span>
                     <span class="pull-right">
                       <span onclick="trashIcon(this.parentNode.parentNode)" class="glyphicon glyphicon-gift"></span>
                       <span onclick="trashIcon(this.parentNode.parentNode)" class="glyphicon glyphicon-trash"></span>

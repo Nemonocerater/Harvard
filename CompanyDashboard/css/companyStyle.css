@@ -118,3 +118,13 @@ a { cursor: pointer; }
 {
 	color: #bbbbbb;
 }
+
+.hintArrow
+{
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	background: url('https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/down3-512.png');
+	background-size: 150px 150px;
+	-display: none;
+}

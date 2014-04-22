@@ -95,7 +95,7 @@ function search(){
 		$.getJSON("../php/getAllPackages.php", function (data) {
 			$("#packages").empty();
 			$.each(data.result, function(){
-			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
+			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"><div id=\"arrowFavorite\" class=\"hintArrow\" style=\"left: -80px; bottom: -150px; -webkit-transform:rotateZ(180deg);\"></div></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 			});
 		});
 	}
@@ -105,7 +105,7 @@ function search(){
 		{	
 			$("#packages").empty();
 			$.each(data.result, function(){
-			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
+			    $("#packages").prepend("<div><div class=\"panel panel-success panel-default\"><div class=\"panel-heading panel-success\"><h3 class=\"panel-title\"><span> "+this['Package Name']+ "</span><span class=\"pull-right\"><span onclick=\"sponsor(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-gift\">"+"&nbsp"+"</span><span onclick=\"wishlist(this.parentNode.parentNode)\" class=\"glyphicon glyphicon-star\"><div id=\"arrowFavorite\" class=\"hintArrow\" style=\"left: -80px; bottom: -150px; -webkit-transform:rotateZ(180deg);\"></div></span></span></h3></div><div class=\"panel-body\"><div class=\"\"><blockquote class=\"pull-left text-muted\"><small>"+this['Detail']+"</small></blockquote><a class=\"pull-right\"> $"+this['Price']+"</a></div></div></div></div>");
 			});
 		}, 'json');
 	}
@@ -141,29 +141,39 @@ function Slider ($object) {
 		slider.object.animate({
 			left: 0
 		}, 1000);
+		updateHint();
 	};
 	slider.close = function () {
 		slider.object.animate({
 			left: slider.hiddenPos
 		}, 1000);
+		hideArrows();
 	};
 }
 
 var hindex = 0;
 var hints = [
-	"Search for a package that best suits your style - Categories, Ethnicity, Sports, Races, etc.",
+	"Search for a package by Category, Culture, Sport, Social Cause, etc.",
 	"Click on the company details button to edit your company profile.",
 	"Click on the star to save the package for later review.",
 	"Click on the trashcan to remove the package from your saved package list."
 ];
+var hintPointers = [
+	"arrowSearch",
+	"arrowCompanyDetails",
+	"",
+	""
+];
 function hint_left()
 {
+	hideArrows();
 	--hindex;
 	if (hindex < 0) hindex = hints.length - 1;
 	updateHint();
 }
 function hint_right()
 {
+	hideArrows();
 	hindex = (hindex + 1) % hints.length;
 	updateHint();
 }
@@ -172,6 +182,11 @@ function updateHint()
 	var hint = hints[hindex];
 	$('#hint').html(hint);
 	$('#hintCount').html((hindex + 1) + "/" + hints.length);
+	$('#' + hintPointers[hindex]).add('.' + hintPointers[hindex]).css("display", "block");
+}
+function hideArrows()
+{
+	$('.hintArrow').css("display", "none");
 }
 updateHint();
 
